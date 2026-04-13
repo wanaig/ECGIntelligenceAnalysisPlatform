@@ -249,7 +249,7 @@ const tableData = [
         <el-table-column prop="indexName" label="指标名称" width="140" />
         <el-table-column label="异常详情" width="140">
           <template #default="{ row }">
-            <div class="multiline-cell" style="text-align: left; color: #666">
+            <div class="multiline-cell" style="text-align: left; color: var(--el-text-color-regular)">
               {{ row.details }}
             </div>
           </template>
@@ -267,7 +267,7 @@ const tableData = [
 
 <style lang="scss" scoped>
 .content {
-  background: #fff;
+  background: var(--el-bg-color-overlay);
   border-radius: 16px;
   padding: 24px;
   flex: 1;
@@ -307,12 +307,12 @@ const tableData = [
             background: transparent;
             padding: 6px 16px;
             font-size: 13px;
-            color: #666;
+            color: var(--el-text-color-regular);
             margin: 0;
             border-radius: 4px;
 
             &.active {
-              background-color: #1daba6;
+              background-color: var(--el-color-primary);
               color: #fff;
             }
           }
@@ -323,11 +323,11 @@ const tableData = [
         box-shadow: 0 0 0 1px #dcdfe6 inset;
 
         &:hover {
-          box-shadow: 0 0 0 1px #1daba6 inset;
+          box-shadow: 0 0 0 1px var(--el-color-primary) inset;
         }
 
         &.is-focus {
-          box-shadow: 0 0 0 1px #1daba6 inset;
+          box-shadow: 0 0 0 1px var(--el-color-primary) inset;
         }
       }
     }
@@ -339,8 +339,8 @@ const tableData = [
       .left-actions {
         .export-btn {
           margin-left: 12px;
-          background-color: #1daba6;
-          border-color: #1daba6;
+          background-color: var(--el-color-primary);
+          border-color: var(--el-color-primary);
         }
       }
 
@@ -351,23 +351,23 @@ const tableData = [
 
         span {
           font-size: 13px;
-          color: #999;
+          color: var(--el-text-color-secondary);
           margin-right: 12px;
         }
 
         .action-btn {
-          background-color: #1daba6;
-          border-color: #1daba6;
+          background-color: var(--el-color-primary);
+          border-color: var(--el-color-primary);
           color: #fff;
 
           &.is-plain {
-            background-color: #fff;
+            background-color: var(--el-bg-color-overlay);
             border-color: #dcdfe6;
             color: #606266;
 
             &:hover {
-              color: #1daba6;
-              border-color: #1daba6;
+              color: var(--el-color-primary);
+              border-color: var(--el-color-primary);
             }
           }
         }
@@ -393,7 +393,7 @@ const tableData = [
       }
 
       .text-include {
-        color: #1daba6;
+        color: var(--el-color-primary);
         font-size: 13px;
         font-weight: 500;
 

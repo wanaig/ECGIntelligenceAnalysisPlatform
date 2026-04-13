@@ -30,7 +30,7 @@ onMounted(() => {
   const genderChart = echarts.init(genderChartRef.value);
   genderChart.setOption({
     tooltip: { trigger: "item" },
-    color: ["#f29c38", "#1DABA6"],
+    color: ["#f29c38", "#2b4b6b"],
     series: [
       {
         type: "pie",
@@ -64,7 +64,7 @@ onMounted(() => {
       {
         type: "bar",
         barWidth: 10,
-        itemStyle: { color: "#1DABA6", borderRadius: 5 },
+        itemStyle: { color: "#2b4b6b", borderRadius: 5 },
         data: [5, 10, 15, 40, 80],
       },
     ],
@@ -95,7 +95,7 @@ onMounted(() => {
       {
         type: "bar",
         barWidth: 8,
-        itemStyle: { color: "#1DABA6", borderRadius: 4 },
+        itemStyle: { color: "#2b4b6b", borderRadius: 4 },
         label: { show: true, position: "right", color: "#555", fontSize: 10 },
         data: [2, 2, 2, 2, 3, 3, 4, 5],
       },
@@ -105,7 +105,7 @@ onMounted(() => {
   // Glucose Doughnut 1
   glChart1Instance = echarts.init(glucoseChartRef1.value);
   glChart1Instance.setOption({
-    color: ["#f29c38", "#1DABA6", "#909399"],
+    color: ["#f29c38", "#2b4b6b", "#909399"],
     tooltip: { trigger: "item", formatter: "{b} : {c}%" },
     series: [
       {
@@ -127,7 +127,7 @@ onMounted(() => {
   // Glucose Doughnut 2
   glChart2Instance = echarts.init(glucoseChartRef2.value);
   glChart2Instance.setOption({
-    color: ["#f29c38", "#1DABA6", "#909399"],
+    color: ["#f29c38", "#2b4b6b", "#909399"],
     tooltip: { trigger: "item", formatter: "{b} : {c}%" },
     series: [
       {
@@ -171,7 +171,7 @@ onMounted(() => {
       {
         type: "bar",
         barWidth: 8,
-        itemStyle: { color: "#1DABA6", borderRadius: 4 },
+        itemStyle: { color: "#2b4b6b", borderRadius: 4 },
         label: { show: true, position: "right", color: "#555", fontSize: 10 },
         data: [9, 9, 9, 9, 9, 10, 10, 15],
       },
@@ -398,14 +398,14 @@ const getAbnormalColor = (text) => {
 
 <style lang="scss" scoped>
 .analysis-container {
-  background: #fff;
+  background: var(--el-bg-color-overlay);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow-y: auto;
-  color: #333;
+  color: var(--el-text-color-primary);
 }
 
 .header-title {
@@ -414,7 +414,7 @@ const getAbnormalColor = (text) => {
   font-weight: bold;
   letter-spacing: 2px;
   margin-bottom: 24px;
-  color: #333;
+  color: var(--el-text-color-primary);
 }
 
 .main-grid {
@@ -453,13 +453,13 @@ const getAbnormalColor = (text) => {
 .panel-title {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--el-text-color-primary);
   margin-bottom: 12px;
   span {
     float: right;
     font-size: 12px;
     font-weight: normal;
-    color: #666;
+    color: var(--el-text-color-regular);
   }
 }
 
@@ -471,10 +471,10 @@ const getAbnormalColor = (text) => {
     float: none;
     font-size: 14px;
     cursor: pointer;
-    color: #999;
+    color: var(--el-text-color-secondary);
     transition: all 0.3s;
     &.active {
-      color: #1daba6;
+      color: var(--el-color-primary);
       font-weight: 600;
     }
   }
@@ -488,7 +488,7 @@ const getAbnormalColor = (text) => {
 
 .sub-title {
   font-size: 12px;
-  color: #666;
+  color: var(--el-text-color-regular);
   text-align: center;
 }
 
@@ -516,9 +516,9 @@ const getAbnormalColor = (text) => {
     text-align: center;
     .stat-val {
       font-size: 24px;
-      color: #1daba6;
+      color: var(--el-color-primary);
       font-weight: 600;
-      border-bottom: 2px solid #e8f7f6;
+      border-bottom: 2px solid var(--el-color-primary-light-9);
       padding-bottom: 8px;
       margin-bottom: 8px;
       display: inline-block;
@@ -526,7 +526,7 @@ const getAbnormalColor = (text) => {
     }
     .stat-label {
       font-size: 13px;
-      color: #666;
+      color: var(--el-text-color-regular);
     }
   }
 }
@@ -542,8 +542,8 @@ const getAbnormalColor = (text) => {
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: #666;
-    background: #fff;
+    color: var(--el-text-color-regular);
+    background: var(--el-bg-color-overlay);
     padding: 8px 12px;
     border-radius: 8px;
     border: 1px solid #f0f2f5;
@@ -557,24 +557,24 @@ const getAbnormalColor = (text) => {
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 75px;
-        color: #333;
+        color: var(--el-text-color-primary);
       }
       .ward-count {
-        color: #1daba6;
+        color: var(--el-color-primary);
         font-weight: 500;
       }
     }
 
     .el-icon {
       font-size: 12px;
-      color: #1daba6;
+      color: var(--el-color-primary);
     }
   }
 }
 
 .legend-box {
   font-size: 11px;
-  color: #666;
+  color: var(--el-text-color-regular);
   line-height: 1.8;
   z-index: 10;
 
@@ -592,7 +592,7 @@ const getAbnormalColor = (text) => {
       background: #f29c38;
     }
     &.dark {
-      background: #1daba6;
+      background: #2b4b6b;
     }
     &.blue {
       background: #909399;
@@ -650,12 +650,12 @@ const getAbnormalColor = (text) => {
     font-size: 14px; // 调大头部字体
     font-weight: 600;
     margin-bottom: 12px; // 增加间距
-    color: #333;
+    color: var(--el-text-color-primary);
   }
 
   .list-header-row {
     font-size: 12px; // 调大表头字体
-    color: #666;
+    color: var(--el-text-color-regular);
     display: flex;
     padding-bottom: 8px; // 增加下边距
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);

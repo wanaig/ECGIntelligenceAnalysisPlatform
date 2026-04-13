@@ -1,10 +1,29 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const activeMenu = ref(route.path || "/analysis");
-const searchQuery = ref("");
+
+const routePaths = {
+  "/workbench": ["工作台"],
+  "/analysis": ["数据分析"],
+  "/glucose/warning": ["全院血糖管理", "预警列表"],
+  "/glucose/unmanaged": ["全院血糖管理", "待管患者"],
+  "/glucose/managed": ["全院血糖管理", "在管患者"],
+  "/glucose/beds": ["全院血糖管理", "床位一览表"],
+  "/glucose/all-patients": ["全院血糖管理", "全院血糖患者"],
+  "/glucose/discharged": ["全院血糖管理", "出组患者"],
+  "/glucose/measurement": ["全院血糖管理", "血糖测量管理"],
+  "/glucose/abnormal": ["全院血糖管理", "异常指标管理"],
+  "/quality/list": ["质控管理", "质控列表"],
+  "/supplier/list": ["供应商管理", "供应商列表"],
+  "/system/users": ["系统管理", "用户管理"]
+};
+
+const breadcrumbs = computed(() => {
+  return routePaths[route.path] || [];
+});
 </script>
 
 <template>
@@ -68,13 +87,12 @@ const searchQuery = ref("");
     <div class="main-container">
       <!-- Header -->
       <div class="header">
-        <div class="search-wrap">
-          <el-input
-            v-model="searchQuery"
-            placeholder="患者名称 / 药品编号 / 医生名称 / 病房号"
-            prefix-icon="Search"
-            class="search-input"
-          />
+        <div class="breadcrumb-wrap">
+          <el-breadcrumb separator=">">
+            <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="index">
+              {{ item }}
+            </el-breadcrumb-item>
+          </el-breadcrumb>
         </div>
         <div class="header-actions">
           <el-icon class="action-icon"><Moon /></el-icon>
@@ -114,7 +132,7 @@ const searchQuery = ref("");
 /* Sidebar */
 .sidebar {
   width: 240px;
-  background-color: #fff;
+  background-color: var(--el-bg-color-overlay);
   display: flex;
   flex-direction: column;
   padding: 20px 0;
@@ -131,7 +149,7 @@ const searchQuery = ref("");
 
     .logo-icon {
       font-size: 24px;
-      color: #1daba6;
+      color: var(--el-color-primary);
       margin-right: 12px;
     }
 
@@ -142,7 +160,7 @@ const searchQuery = ref("");
 
       small {
         font-size: 11px;
-        color: #999;
+        color: var(--el-text-color-secondary);
         font-weight: normal;
       }
     }
@@ -170,8 +188,8 @@ const searchQuery = ref("");
       }
 
       &.is-active {
-        background-color: #e8f7f6;
-        color: #1daba6;
+        background-color: var(--el-color-primary-light-9);
+        color: var(--el-color-primary);
         font-weight: 500;
       }
     }
@@ -195,8 +213,8 @@ const searchQuery = ref("");
     }
 
     :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
-      background-color: #e8f7f6;
-      color: #1daba6;
+      background-color: var(--el-color-primary-light-9);
+      color: var(--el-color-primary);
       font-weight: 500;
     }
   }
@@ -216,27 +234,16 @@ const searchQuery = ref("");
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: var(--el-bg-color-overlay);
   padding: 16px 24px;
   border-radius: 16px;
   margin-bottom: 24px;
 
-  .search-wrap {
-    width: 440px;
-
-    :deep(.search-input) {
-      --el-input-border-color: transparent;
-      --el-input-hover-border-color: transparent;
-      --el-input-focus-border-color: transparent;
-      --el-input-bg-color: #f3f5f8;
-
-      .el-input__wrapper {
-        border-radius: 24px;
-        box-shadow: none !important;
-        background-color: #f3f5f8;
-        padding: 4px 16px;
-      }
-    }
+  .breadcrumb-wrap {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--el-text-color-regular);
   }
 
   .header-actions {
@@ -245,10 +252,10 @@ const searchQuery = ref("");
 
     .action-icon {
       font-size: 18px;
-      color: #1daba6;
+      color: var(--el-color-primary);
       margin-right: 16px;
       cursor: pointer;
-      background-color: #e8f7f6;
+      background-color: var(--el-color-primary-light-9);
       border-radius: 50%;
       width: 34px;
       height: 34px;
@@ -271,12 +278,12 @@ const searchQuery = ref("");
         .user-name {
           font-size: 14px;
           font-weight: 600;
-          color: #333;
+          color: var(--el-text-color-primary);
         }
 
         .user-role {
           font-size: 12px;
-          color: #1daba6;
+          color: var(--el-color-primary);
         }
       }
     }

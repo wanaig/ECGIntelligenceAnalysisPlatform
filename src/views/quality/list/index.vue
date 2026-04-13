@@ -15,19 +15,19 @@ defineOptions({
 
 <style lang="scss" scoped>
 .page-container {
-  background: #fff;
+  background: var(--el-bg-color-overlay);
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  color: #333;
+  color: var(--el-text-color-primary);
 
   .header-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 24px;
-    color: #333;
+    color: var(--el-text-color-primary);
   }
 
   .content-box {

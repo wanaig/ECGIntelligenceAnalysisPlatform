@@ -167,7 +167,7 @@ function selectRoom(room) {
 
 .sidebar {
   width: 320px;
-  background: #f7fbfa;
+  background: var(--el-color-primary-light-9);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -178,12 +178,12 @@ function selectRoom(room) {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background: #fff;
+    background: var(--el-bg-color-overlay);
     
     .title {
       font-size: 16px;
       font-weight: bold;
-      color: #333;
+      color: var(--el-text-color-primary);
     }
   }
 
@@ -201,7 +201,7 @@ function selectRoom(room) {
     }
 
     .room-item {
-      background: #fff;
+      background: var(--el-bg-color-overlay);
       border-radius: 8px;
       padding: 16px;
       margin-bottom: 12px;
@@ -210,7 +210,7 @@ function selectRoom(room) {
       transition: all 0.3s;
 
       &.active {
-        background: #f2f9f9;
+        background: var(--el-color-primary-light-9);
       }
       
       .room-info {
@@ -220,10 +220,10 @@ function selectRoom(room) {
         
         .room-name {
           font-weight: bold;
-          color: #333;
+          color: var(--el-text-color-primary);
         }
         .room-nurse {
-          color: #1DABA6;
+          color: var(--el-color-primary);
           font-size: 14px;
         }
       }
@@ -239,7 +239,7 @@ function selectRoom(room) {
           border-radius: 4px;
 
           &.occupied {
-            background: #1DABA6;
+            background: var(--el-color-primary);
           }
         }
       }
@@ -249,7 +249,7 @@ function selectRoom(room) {
 
 .main-content {
   flex: 1;
-  background: #f7fbfa;
+  background: var(--el-color-primary-light-9);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -257,12 +257,12 @@ function selectRoom(room) {
 
   .main-header {
     padding: 20px;
-    background: #fff;
+    background: var(--el-bg-color-overlay);
     
     .title {
       font-size: 16px;
       font-weight: bold;
-      color: #333;
+      color: var(--el-text-color-primary);
     }
   }
 
@@ -280,27 +280,27 @@ function selectRoom(room) {
     }
 
     .patient-card {
-      background: #f2f9f9;
-      border: 1px solid #1DABA6;
+      background: var(--el-color-primary-light-9);
+      border: 1px solid var(--el-color-primary);
       border-radius: 8px;
       padding: 20px;
       margin-bottom: 16px;
       display: flex;
 
       &.empty {
-        background: #fff;
+        background: var(--el-bg-color-overlay);
         justify-content: space-between;
         align-items: center;
 
         .empty-bed {
           font-weight: bold;
-          color: #333;
+          color: var(--el-text-color-primary);
           font-size: 16px;
         }
 
         .add-btn {
-          background-color: #1DABA6;
-          border-color: #1DABA6;
+          background-color: var(--el-color-primary);
+          border-color: var(--el-color-primary);
         }
       }
 
@@ -313,18 +313,18 @@ function selectRoom(room) {
         .bed-no {
           font-weight: bold;
           font-size: 16px;
-          color: #333;
+          color: var(--el-text-color-primary);
         }
         .time {
-          color: #1DABA6;
+          color: var(--el-color-primary);
           font-size: 13px;
         }
         .name {
-          color: #666;
+          color: var(--el-text-color-regular);
           font-size: 14px;
         }
         .day {
-          color: #666;
+          color: var(--el-text-color-regular);
           font-size: 14px;
         }
       }
@@ -342,11 +342,11 @@ function selectRoom(room) {
           
           .label {
             width: 80px;
-            color: #333;
+            color: var(--el-text-color-primary);
             font-weight: 500;
           }
           .value {
-            color: #666;
+            color: var(--el-text-color-regular);
           }
         }
       }
@@ -358,7 +358,7 @@ function selectRoom(room) {
         align-items: flex-start;
 
         .more-icon {
-          color: #1DABA6;
+          color: var(--el-color-primary);
           font-size: 20px;
           cursor: pointer;
         }

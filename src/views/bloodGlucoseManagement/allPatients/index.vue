@@ -244,7 +244,7 @@ const tableData = [
             style="width: 260px"
             clearable
           />
-          <el-button type="primary" style="margin-left: 0; background-color: #1DABA6; border-color: #409EFF;">查询</el-button>
+          <el-button type="primary" style="margin-left: 0; background-color: var(--el-color-primary); border-color: var(--el-color-primary);">查询</el-button>
           <el-button class="action-btn is-plain">重置</el-button>
         </div>
       </div>
@@ -285,7 +285,7 @@ const tableData = [
 
 <style lang="scss" scoped>
 .content {
-  background: #fff;
+  background: var(--el-bg-color-overlay);
   border-radius: 16px;
   padding: 24px;
   flex: 1;
@@ -312,8 +312,8 @@ const tableData = [
       .left-actions {
         .export-btn {
           margin-left: 12px;
-          background-color: #1daba6;
-          border-color: #1daba6;
+          background-color: var(--el-color-primary);
+          border-color: var(--el-color-primary);
         }
       }
 
@@ -324,23 +324,23 @@ const tableData = [
 
         span {
           font-size: 13px;
-          color: #999;
+          color: var(--el-text-color-secondary);
           margin-right: 12px;
         }
 
         .action-btn {
-          background-color: #1daba6;
-          border-color: #1daba6;
+          background-color: var(--el-color-primary);
+          border-color: var(--el-color-primary);
           color: #fff;
 
           &.is-plain {
-            background-color: #fff;
+            background-color: var(--el-bg-color-overlay);
             border-color: #dcdfe6;
             color: #606266;
 
             &:hover {
-              color: #1daba6;
-              border-color: #1daba6;
+              color: var(--el-color-primary);
+              border-color: var(--el-color-primary);
             }
           }
         }
@@ -366,7 +366,7 @@ const tableData = [
       }
 
       .text-include {
-        color: #1daba6;
+        color: var(--el-color-primary);
         font-size: 13px;
         font-weight: 500;
 
