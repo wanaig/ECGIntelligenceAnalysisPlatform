@@ -7,13 +7,8 @@ const router = createRouter({
     {
       path: "/",
       component: Layout,
-      redirect: "/patient",
+      redirect: "/analysis",
       children: [
-        {
-          path: "patient",
-          name: "patient",
-          component: () => import("../views/patient/index.vue"),
-        },
         {
           path: "analysis",
           name: "analysis",
