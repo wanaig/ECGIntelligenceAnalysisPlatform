@@ -162,12 +162,12 @@ function selectRoom(room) {
   display: flex;
   height: 100%;
   gap: 20px;
-  background-color: transparent;
+  background-color: #ffffff;
 }
 
 .sidebar {
   width: 320px;
-  background: var(--el-color-primary-light-9);
+  background: transparent;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -212,7 +212,7 @@ function selectRoom(room) {
       &.active {
         background: var(--el-color-primary-light-9);
       }
-      
+
       .room-info {
         display: flex;
         justify-content: space-between;
@@ -249,7 +249,7 @@ function selectRoom(room) {
 
 .main-content {
   flex: 1;
-  background: var(--el-color-primary-light-9);
+  background: transparent;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
