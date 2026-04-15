@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import { apiAllPatients } from "@/apis/bloodGlucoseManagement/allPatients";
 
 defineOptions({
   name: "WarningList",
@@ -14,188 +15,34 @@ const searchForm = ref({
   dateRange: [],
 });
 
-const tableData = [
-  {
-    id: 1,
-    ward: "心血管外科二病区",
-    bedNo: "37",
-    patientInfo: "罗平 / 69岁 / 男",
-    tag: "高危",
-    admissionNo: "2186225",
-    admissionDate: "2026-03-10",
-    diagnosis: "冠心病，心力衰竭",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 2,
-    ward: "心血管内科一病区",
-    bedNo: "040",
-    patientInfo: "曾小明 / 62岁 / 男",
-    tag: "关注",
-    admissionNo: "2191985",
-    admissionDate: "2026-03-31",
-    diagnosis: "高血压3级，2型糖尿病",
-    groupStatus: "未纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 3,
-    ward: "神经外科二病区",
-    bedNo: "16",
-    patientInfo: "廖在福 / 63岁 / 男",
-    tag: "常规",
-    admissionNo: "2180867",
-    admissionDate: "2026-03-23",
-    diagnosis: "脑出血恢复期",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 4,
-    ward: "妇科二病区",
-    bedNo: "22",
-    patientInfo: "陈六祥 / 63岁 / 女",
-    tag: "常规",
-    admissionNo: "2190574",
-    admissionDate: "2026-03-26",
-    diagnosis: "子宫肌瘤",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 5,
-    ward: "咽喉头颈外科病区",
-    bedNo: "18",
-    patientInfo: "罗建强 / 56岁 / 男",
-    tag: "高危",
-    admissionNo: "2190955",
-    admissionDate: "2026-03-27",
-    diagnosis: "甲状腺恶性肿瘤",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 6,
-    ward: "血液内科三病区",
-    bedNo: "024",
-    patientInfo: "郑邦贵 / 63岁 / 男",
-    tag: "关注",
-    admissionNo: "2173912",
-    admissionDate: "2026-03-26",
-    diagnosis: "急性髓系白血病",
-    groupStatus: "未纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 7,
-    ward: "心血管内科三病区",
-    bedNo: "021",
-    patientInfo: "陈书 / 55岁 / 男",
-    tag: "常规",
-    admissionNo: "2185505",
-    admissionDate: "2026-03-25",
-    diagnosis: "心绞痛",
-    groupStatus: "已纳入",
-    hospitalStatus: "转出",
-  },
-  {
-    id: 8,
-    ward: "内分泌科一病区",
-    bedNo: "05",
-    patientInfo: "张翠花 / 68岁 / 女",
-    tag: "高危",
-    admissionNo: "2198833",
-    admissionDate: "2026-03-28",
-    diagnosis: "2型糖尿病并发症",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 9,
-    ward: "骨科病区",
-    bedNo: "12",
-    patientInfo: "王建国 / 72岁 / 男",
-    tag: "常规",
-    admissionNo: "2187742",
-    admissionDate: "2026-03-20",
-    diagnosis: "股骨颈骨折",
-    groupStatus: "未纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 10,
-    ward: "消化内科",
-    bedNo: "28",
-    patientInfo: "李梅 / 45岁 / 女",
-    tag: "常规",
-    admissionNo: "2195566",
-    admissionDate: "2026-03-29",
-    diagnosis: "急性胰腺炎",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 11,
-    ward: "老年医学科",
-    bedNo: "03",
-    patientInfo: "刘建华 / 81岁 / 男",
-    tag: "高危",
-    admissionNo: "2196671",
-    admissionDate: "2026-04-01",
-    diagnosis: "慢性阻塞性肺疾病，2型糖尿病",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 12,
-    ward: "重症医学科",
-    bedNo: "08",
-    patientInfo: "陈秀英 / 76岁 / 女",
-    tag: "高危",
-    admissionNo: "2189902",
-    admissionDate: "2026-03-15",
-    diagnosis: "重症肺炎合并呼吸衰竭",
-    groupStatus: "未纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 13,
-    ward: "肾内科",
-    bedNo: "15",
-    patientInfo: "吴志强 / 58岁 / 男",
-    tag: "关注",
-    admissionNo: "2191123",
-    admissionDate: "2026-03-28",
-    diagnosis: "慢性肾功能不全尿毒症期",
-    groupStatus: "已纳入",
-    hospitalStatus: "在院",
-  },
-  {
-    id: 14,
-    ward: "呼吸内科",
-    bedNo: "42",
-    patientInfo: "林素芬 / 64岁 / 女",
-    tag: "常规",
-    admissionNo: "2184433",
-    admissionDate: "2026-03-18",
-    diagnosis: "支气管哮喘急性发作",
-    groupStatus: "已纳入",
-    hospitalStatus: "转出",
-  },
-  {
-    id: 15,
-    ward: "急诊抢救室",
-    bedNo: "01",
-    patientInfo: "周天明 / 45岁 / 男",
-    tag: "高危",
-    admissionNo: "2198899",
-    admissionDate: "2026-04-10",
-    diagnosis: "急性广泛前壁心肌梗死",
-    groupStatus: "未纳入",
-    hospitalStatus: "在院",
-  },
-];
+const loading = ref(false);
+const tableData = ref([]);
+const total = ref(0);
+const queryParams = reactive({
+  pageNum: 1,
+  pageSize: 20
+});
+
+const getList = async () => {
+  loading.value = true;
+  try {
+    const res = await apiAllPatients();
+    if (res.success) {
+      tableData.value = res.data.list;
+      total.value = res.data.total;
+      queryParams.pageNum = res.data.pageNum;
+      queryParams.pageSize = res.data.pageSize;
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  getList();
+});
 </script>
 
 <template>
@@ -253,6 +100,7 @@ const tableData = [
     <!-- Table Section -->
     <div class="table-card">
       <el-table
+        v-loading="loading"
         :data="tableData"
         style="width: 100%"
         :header-cell-style="{
@@ -267,9 +115,28 @@ const tableData = [
         <el-table-column prop="ward" label="病区" min-width="140" />
         <el-table-column prop="bedNo" label="床号" width="80" align="center" />
         <el-table-column prop="patientInfo" label="患者信息" width="160" />
-        <el-table-column prop="tag" label="标签" width="100" />
+        <el-table-column prop="tag" label="标签" width="100">
+          <template #default="{ row }">
+            <el-tag
+              :type="
+                row.tag === '重点关注'
+                  ? 'danger'
+                  : row.tag === '一般关注'
+                  ? 'warning'
+                  : 'success'
+              "
+              size="small"
+            >
+              {{ row.tag }}
+            </el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="admissionNo" label="住院号" width="120" />
-        <el-table-column prop="admissionDate" label="住院日期" width="120" />
+        <el-table-column prop="admissionDate" label="住院日期" width="120">
+          <template #default="{ row }">
+            {{ row.admissionDate || '-' }}
+          </template>
+        </el-table-column>
         <el-table-column prop="diagnosis" label="住院诊断" min-width="180" />
         <el-table-column prop="groupStatus" label="纳入状态" width="100" />
         <el-table-column prop="hospitalStatus" label="住院状态" width="100" />
@@ -279,6 +146,18 @@ const tableData = [
           </template>
         </el-table-column>
       </el-table>
+
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.pageNum"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50, 100]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+          @size-change="getList"
+          @current-change="getList"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -354,8 +233,11 @@ const tableData = [
     overflow: hidden;
     border: 1px solid #f0f2f5;
     border-radius: 8px;
+    display: flex;
+    flex-direction: column;
 
     :deep(.el-table) {
+      flex: 1;
       height: 100%;
 
       .multiline-cell {
@@ -385,6 +267,14 @@ const tableData = [
           opacity: 0.8;
         }
       }
+    }
+
+    .pagination-container {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px;
+      border-top: 1px solid #ebeef5;
+      background-color: #fff;
     }
   }
 }

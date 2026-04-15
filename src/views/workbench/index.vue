@@ -13,7 +13,7 @@ const getPrimaryColor = () => {
 // 顶部时间筛选
 const dateRange = ref([]);
 const activeDateBtn = ref("今天");
-const dateBtns = ["今天", "本周", "本月", "本年", "自定义"];
+const dateBtns = ["今天", "本周", "本月", "本年"];
 
 // 统计数据
 const stats = [

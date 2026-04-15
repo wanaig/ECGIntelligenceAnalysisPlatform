@@ -1,70 +1,54 @@
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { MoreFilled } from "@element-plus/icons-vue"
+import { apiRoomsList, apiRoomPatientsList } from "@/apis/bloodGlucoseManagement/bedLIst"
 
 defineOptions({
   name: "BedList",
 })
 
 const department = ref("呼吸道科")
-const rooms = ref(
-  Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    name: `普通病房 40${i + 1}`,
-    nurse: "护士-刘爽",
-    totalBeds: 5,
-    occupiedBeds: Math.floor(Math.random() * 5) + 1,
-  }))
-)
-const activeRoomId = ref(1)
+const rooms = ref([])
+const activeRoomId = ref(null)
 
-const patients = ref([
-  {
-    bed: "1号床",
-    time: "2023-09-14-10:30",
-    name: "曹操",
-    day: "第1天",
-    condition: "慢性非萎缩性胃炎并胃窦轻度糜烂",
-    status: "手术恢复",
-    medication: "阿莫西林",
-    hospitalDays: "5天",
-    isEmpty: false,
-  },
-  {
-    bed: "2号床",
-    time: "2023-09-14-10:30",
-    name: "曹丕",
-    day: "第1天",
-    condition: "慢性非萎缩性胃炎并胃窦轻度糜烂",
-    status: "手术恢复",
-    medication: "阿莫西林",
-    hospitalDays: "5天",
-    isEmpty: false,
-  },
-  {
-    bed: "3号床",
-    time: "2023-09-14-10:30",
-    name: "司马懿",
-    day: "第1天",
-    condition: "慢性非萎缩性胃炎并胃窦轻度糜烂",
-    status: "手术恢复",
-    medication: "阿莫西林",
-    hospitalDays: "5天",
-    isEmpty: false,
-  },
-  {
-    bed: "4号床",
-    isEmpty: true,
-  },
-  {
-    bed: "5号床",
-    isEmpty: true,
-  },
-])
+const patients = ref([])
+
+const getRooms = async () => {
+  try {
+    const res = await apiRoomsList()
+    if (res.success) {
+      rooms.value = res.data || []
+      if (rooms.value.length > 0) {
+        activeRoomId.value = rooms.value[0].id
+        getPatients(activeRoomId.value)
+      }
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const getPatients = async (roomId) => {
+  try {
+    const res = await apiRoomPatientsList(roomId)
+    if (res.success) {
+      patients.value = res.data || []
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 function selectRoom(room) {
-  activeRoomId.value = room.id
+  if (activeRoomId.value !== room.id) {
+    activeRoomId.value = room.id
+    getPatients(room.id)
+  }
 }
+
+onMounted(() => {
+  getRooms()
+})
 </script>
 
 <template>
@@ -117,30 +101,30 @@ function selectRoom(room) {
           <template v-if="!p.isEmpty">
             <div class="card-left">
               <div class="top-row">
-                <span class="bed-no">{{ p.bed }}</span>
+                <span class="bed-no">{{ p.bed }}{{ String(p.bed || '').includes('床') ? '' : '床' }}</span>
               </div>
-              <div class="time">{{ p.time }}</div>
+              <div class="time">{{ p.time || '-' }}</div>
               <div class="name-day">
-                <span class="name">{{ p.name }}</span>
+                <span class="name">{{ p.name || '-' }}</span>
               </div>
-              <div class="day">{{ p.day }}</div>
+              <div class="day">{{ p.day || '-' }}</div>
             </div>
             <div class="card-middle">
               <div class="info-row">
                 <span class="label">患者病情</span>
-                <span class="value">{{ p.condition }}</span>
+                <span class="value">{{ p.condition || '-' }}</span>
               </div>
               <div class="info-row">
                 <span class="label">患者状态</span>
-                <span class="value">{{ p.status }}</span>
+                <span class="value">{{ p.status || '-' }}</span>
               </div>
               <div class="info-row">
                 <span class="label">治疗药品</span>
-                <span class="value">{{ p.medication }}</span>
+                <span class="value">{{ p.medication || '-' }}</span>
               </div>
               <div class="info-row">
                 <span class="label">住院天数</span>
-                <span class="value">{{ p.hospitalDays }}</span>
+                <span class="value">{{ p.hospitalDays || '-' }}</span>
               </div>
             </div>
             <div class="card-right">
@@ -148,7 +132,7 @@ function selectRoom(room) {
             </div>
           </template>
           <template v-else>
-            <span class="empty-bed">{{ p.bed }}</span>
+            <span class="empty-bed">{{ p.bed }}{{ String(p.bed || '').includes('床') ? '' : '床' }}</span>
             <el-button type="primary" round class="add-btn">添加患者</el-button>
           </template>
         </div>
