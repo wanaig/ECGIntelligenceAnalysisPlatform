@@ -1,7 +1,8 @@
 <script setup>
-import { ref, reactive, nextTick, shallowRef, onUnmounted } from 'vue';
+import { ref, reactive, nextTick, shallowRef, onUnmounted, onMounted } from 'vue';
 import { Search, Refresh, View } from '@element-plus/icons-vue';
 import * as echarts from 'echarts';
+import { apiMeasurementList } from '@/apis/bloodGlucoseManagement/measurement';
 
 defineOptions({
   name: "Measurement",
@@ -14,33 +15,32 @@ const queryParams = reactive({
   status: ''
 });
 
-// 模拟心电图数据
-const mockData = [
-  { id: 1001, name: '张三', patientId: 'P001', bedNo: 'A区-01床', measureTime: '2026-04-14 09:12:00', heartRate: 75, stSegment: 0.05, qt: 400, qrs: 90, status: 'stable', desc: '正常心电图' },
-  { id: 1002, name: '李四', patientId: 'P002', bedNo: 'A区-02床', measureTime: '2026-04-14 09:30:00', heartRate: 115, stSegment: -0.25, qt: 460, qrs: 120, status: 'abnormal', desc: '窦性心动过速，ST段压低' },
-  { id: 1003, name: '王五', patientId: 'P003', bedNo: 'B区-05床', measureTime: '2026-04-14 10:05:00', heartRate: 60, stSegment: 0.02, qt: 410, qrs: 95, status: 'stable', desc: '正常心电图' },
-  { id: 1004, name: '赵六', patientId: 'P004', bedNo: 'C区-10床', measureTime: '2026-04-14 10:45:00', heartRate: 48, stSegment: 0.06, qt: 420, qrs: 100, status: 'abnormal', desc: '心动过缓' },
-  { id: 1005, name: '孙七', patientId: 'P005', bedNo: 'C区-11床', measureTime: '2026-04-14 11:20:00', heartRate: 85, stSegment: 0.35, qt: 440, qrs: 110, status: 'abnormal', desc: 'ST段显著抬高，疑似急性心梗' },
-];
-
-const tableData = ref([...mockData]);
+const tableData = ref([]);
 
 // 分页
-const total = ref(mockData.length);
+const total = ref(0);
 const currentPage = ref(1);
 const pageSize = ref(10);
 
+const getList = async () => {
+  try {
+    const res = await apiMeasurementList();
+    if (res.code === 200) {
+      tableData.value = res.data.list || res.data || [];
+      total.value = res.data.total || tableData.value.length;
+    }
+  } catch (error) {
+    console.error('Failed to fetch measurement list:', error);
+  }
+};
+
+onMounted(() => {
+  getList();
+});
+
 // 查询操作
 const handleSearch = () => {
-  let result = mockData;
-  if (queryParams.name) {
-    result = result.filter(item => item.name.includes(queryParams.name) || item.patientId.includes(queryParams.name));
-  }
-  if (queryParams.status) {
-    result = result.filter(item => item.status === queryParams.status);
-  }
-  tableData.value = result;
-  total.value = result.length;
+  getList();
 };
 
 // 重置操作
@@ -48,7 +48,8 @@ const handleReset = () => {
   queryParams.name = '';
   queryParams.dateRange = [];
   queryParams.status = '';
-  handleSearch();
+  currentPage.value = 1;
+  getList();
 };
 
 // --- ECharts 波形图相关 ---
